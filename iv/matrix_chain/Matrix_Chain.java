@@ -58,8 +58,8 @@ public class Matrix_Chain {
       }
     }
 
-    printOptimalParens(optimalParams, 1, length);
-    System.out.println();
+    // printOptimalParens(optimalParams, 1, length);
+    // System.out.println();
 
     return memo[1][length];
   }

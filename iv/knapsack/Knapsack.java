@@ -2,10 +2,8 @@ package com.iv.knapsack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class Knapsack {
   public int capacity;
@@ -19,6 +17,27 @@ public class Knapsack {
   public void add(int weight, int cost) {
     KnapGold newGold = new KnapGold(weight, cost);
     sack.add(newGold);
+  }
+
+  public int fractionKS() {
+    List<KnapGold> list = new ArrayList<>(this.sack);
+    Collections.sort(list, Collections.reverseOrder());
+
+    int remainingWeight = this.capacity;
+    int result = 0;
+    int i = 0;
+    while (remainingWeight > 0) {
+      if (list.get(i).weight <= remainingWeight) {
+        result += list.get(i).cost;
+        remainingWeight -= list.get(i).weight;
+      } else {
+        result += (list.get(i).value * remainingWeight);
+        remainingWeight = 0;
+      }
+      i++;
+    }
+
+    return result;
   }
 
   public int knapsackMemo() {
@@ -83,32 +102,4 @@ public class Knapsack {
     return "{" + " capacity='" + this.capacity + "'" + ", sack='" + this.sack + "'" + "}";
   }
 
-}
-
-class KnapGold implements Comparable<KnapGold> {
-  public Integer weight;
-  public Integer cost;
-  public Double value;
-
-  public KnapGold(int weight, int cost) {
-    this.weight = weight;
-    this.cost = cost;
-    this.value = this.cost.doubleValue() / this.weight.doubleValue();
-  }
-
-  @Override
-  public int compareTo(KnapGold other) {
-    if (this.value < other.value)
-      return -1;
-
-    else if (this.value > other.value)
-      return 1;
-    else
-      return 0;
-  }
-
-  @Override
-  public String toString() {
-    return "{" + " weight='" + this.weight + "'" + ", cost='" + this.cost + "'" + ", value='" + this.value + "'" + "}";
-  }
 }

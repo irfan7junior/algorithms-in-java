@@ -357,7 +357,7 @@ public class AllConstruct {
 
         for (int i = 0; i < suffixWays.size(); i++) {
           List<String> temp = new ArrayList<>(suffixWays.get(i));
-          temp.add(word);
+          temp.add(0, word);
           targetWays.add(temp);
         }
 
